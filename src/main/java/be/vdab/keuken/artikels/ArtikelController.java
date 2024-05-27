@@ -3,6 +3,8 @@ package be.vdab.keuken.artikels;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -23,5 +25,15 @@ public class ArtikelController {
     @PostMapping
     long create(@RequestBody @Valid NieuweArtikel nieuweArtikel) {
         return artikelService.create(nieuweArtikel);
+    }
+
+    @GetMapping(value = "naamBevat", params = "woord")
+    List<Artikel> findByNaamBevatWoord(String woord) {
+        return artikelService.findByNaamBevatWoord(woord);
+    }
+
+    @GetMapping(params = "minimumWinst")
+    List<Artikel> findByMinimumWinst(BigDecimal minimumWinst) {
+        return artikelService.findMinimumWinst(minimumWinst);
     }
 }

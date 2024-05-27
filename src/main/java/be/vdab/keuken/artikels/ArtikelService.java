@@ -4,6 +4,8 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -25,5 +27,11 @@ public class ArtikelService {
                 nieuweArtikel.verkoopprijs());
         artikelRepository.save(artikel);
         return artikel.getId();
+    }
+    List<Artikel> findByNaamBevatWoord(String woord){
+       return artikelRepository.findByNaamContainingOrderByNaam(woord);
+    }
+    List<Artikel> findMinimumWinst(BigDecimal minimumWinst){
+        return artikelRepository.findByMinumumWinst(minimumWinst);
     }
 }
