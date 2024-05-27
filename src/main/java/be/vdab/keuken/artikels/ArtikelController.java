@@ -1,9 +1,7 @@
 package be.vdab.keuken.artikels;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -18,7 +16,12 @@ public class ArtikelController {
 
     @GetMapping("{id}")
     Artikel findById(@PathVariable long id) {
-       return artikelService.findById(id)
+        return artikelService.findById(id)
                 .orElseThrow(ArtikelNietGevondenException::new);
+    }
+
+    @PostMapping
+    long create(@RequestBody @Valid NieuweArtikel nieuweArtikel) {
+        return artikelService.create(nieuweArtikel);
     }
 }
