@@ -1,6 +1,8 @@
 package be.vdab.keuken.artikels;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -45,5 +47,10 @@ public class ArtikelController {
     @GetMapping("namen")
     List<EnkelNamen> findNamen() {
         return artikelService.findNamen();
+    }
+
+    @PatchMapping("{id}/verkoopprijs")
+    void wijzigVerkoopprijsById(@PathVariable long id, @RequestBody @NotNull @Positive BigDecimal verkoopprijs) {
+        artikelService.wijzigVerkoopprijs(id, verkoopprijs);
     }
 }

@@ -44,4 +44,10 @@ public class ArtikelService {
     List<EnkelNamen> findNamen() {
         return artikelRepository.findNamenVanArtikel();
     }
+    @Transactional
+    void wijzigVerkoopprijs(long id, BigDecimal verkoopprijs){
+        artikelRepository.findById(id)
+                .orElseThrow(ArtikelNietGevondenException::new)
+                .setVerkoopprijs(verkoopprijs);
+    }
 }
