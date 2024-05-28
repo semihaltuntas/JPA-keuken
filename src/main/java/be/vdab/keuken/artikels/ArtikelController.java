@@ -36,4 +36,14 @@ public class ArtikelController {
     List<Artikel> findByMinimumWinst(BigDecimal minimumWinst) {
         return artikelService.findMinimumWinst(minimumWinst);
     }
+
+    @GetMapping("verkoopprijzen/goodkoopste")
+    BigDecimal findGoodkoopsteVerkoopprijs() {
+        return artikelService.findGoodkoopsteVerkoopprijs();
+    }
+
+    @GetMapping("namen")
+    List<EnkelNamen> findNamen() {
+        return artikelService.findNamen();
+    }
 }

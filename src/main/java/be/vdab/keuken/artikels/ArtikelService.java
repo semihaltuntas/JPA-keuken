@@ -28,10 +28,20 @@ public class ArtikelService {
         artikelRepository.save(artikel);
         return artikel.getId();
     }
-    List<Artikel> findByNaamBevatWoord(String woord){
-       return artikelRepository.findByNaamContainingOrderByNaam(woord);
+
+    List<Artikel> findByNaamBevatWoord(String woord) {
+        return artikelRepository.findByNaamContainingOrderByNaam(woord);
     }
-    List<Artikel> findMinimumWinst(BigDecimal minimumWinst){
+
+    List<Artikel> findMinimumWinst(BigDecimal minimumWinst) {
         return artikelRepository.findByMinumumWinst(minimumWinst);
+    }
+
+    BigDecimal findGoodkoopsteVerkoopprijs() {
+        return artikelRepository.findGoedkoopsteAankoopprijs();
+    }
+
+    List<EnkelNamen> findNamen() {
+        return artikelRepository.findNamenVanArtikel();
     }
 }
