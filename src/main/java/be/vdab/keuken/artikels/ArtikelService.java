@@ -22,9 +22,17 @@ public class ArtikelService {
     }
 
     @Transactional
-    long create(NieuweArtikel nieuweArtikel) {
-        var artikel = new Artikel(nieuweArtikel.naam(), nieuweArtikel.aankoopprijs(),
-                nieuweArtikel.verkoopprijs());
+    long create(NieuwFoodArtikel nieuwFoodArtikel) {
+        var artikel = new FoodArtikel(nieuwFoodArtikel.naam(), nieuwFoodArtikel.aankoopprijs(),
+                nieuwFoodArtikel.verkoopprijs(), nieuwFoodArtikel.houdbaarheid());
+        artikelRepository.save(artikel);
+        return artikel.getId();
+    }
+
+    @Transactional
+    long create(NieuwNonFoodArtikel nieuwNonFoodArtikel) {
+        var artikel = new NonFoodArtikel(nieuwNonFoodArtikel.naam(), nieuwNonFoodArtikel.aankoopprijs(),
+                nieuwNonFoodArtikel.verkoopprijs(), nieuwNonFoodArtikel.garantie());
         artikelRepository.save(artikel);
         return artikel.getId();
     }
@@ -44,10 +52,15 @@ public class ArtikelService {
     List<EnkelNamen> findNamen() {
         return artikelRepository.findNamenVanArtikel();
     }
+
     @Transactional
-    void wijzigVerkoopprijs(long id, BigDecimal verkoopprijs){
+    void wijzigVerkoopprijs(long id, BigDecimal verkoopprijs) {
         artikelRepository.findById(id)
                 .orElseThrow(ArtikelNietGevondenException::new)
                 .setVerkoopprijs(verkoopprijs);
+    }
+
+    List<Artikel> findAll() {
+        return artikelRepository.findAll();
     }
 }

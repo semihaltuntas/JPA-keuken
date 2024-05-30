@@ -24,9 +24,14 @@ public class ArtikelController {
                 .orElseThrow(ArtikelNietGevondenException::new);
     }
 
-    @PostMapping
-    long create(@RequestBody @Valid NieuweArtikel nieuweArtikel) {
-        return artikelService.create(nieuweArtikel);
+    @PostMapping("food")
+    long create(@RequestBody @Valid NieuwFoodArtikel nieuwFoodArtikel) {
+        return artikelService.create(nieuwFoodArtikel);
+    }
+
+    @PostMapping("nonfood")
+    long create(@RequestBody @Valid NieuwNonFoodArtikel nieuwNonFoodArtikel) {
+        return artikelService.create(nieuwNonFoodArtikel);
     }
 
     @GetMapping(value = "naamBevat", params = "woord")
@@ -52,5 +57,10 @@ public class ArtikelController {
     @PatchMapping("{id}/verkoopprijs")
     void wijzigVerkoopprijsById(@PathVariable long id, @RequestBody @NotNull @Positive BigDecimal verkoopprijs) {
         artikelService.wijzigVerkoopprijs(id, verkoopprijs);
+    }
+
+    @GetMapping()
+    List<Artikel> findAllArtikels() {
+        return artikelService.findAll();
     }
 }

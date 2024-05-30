@@ -18,4 +18,6 @@ public interface ArtikelRepository extends JpaRepository<Artikel, Long> {
 
     @Query("select a.naam as naam from Artikel a order by naam") //Extra Code
     List<EnkelNamen> findNamenVanArtikel();
+
+    List<Artikel> findAll();
 }
