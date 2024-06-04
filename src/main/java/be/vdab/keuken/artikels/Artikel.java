@@ -3,18 +3,26 @@ package be.vdab.keuken.artikels;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.util.Collections;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "soort")
 @Table(name = "artikels")
-public abstract class Artikel {
+ abstract class Artikel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String naam;
     private BigDecimal aankoopprijs;
     private BigDecimal verkoopprijs;
+
+    @ElementCollection
+    @CollectionTable(name = "kortingen",joinColumns = @JoinColumn(name = "artikelId"))
+    @OrderBy("vanafAantal")
+    private Set<Korting> kortingen;
 
 
     protected Artikel() {
@@ -24,6 +32,10 @@ public abstract class Artikel {
         this.naam = naam;
         this.aankoopprijs = aankoopprijs;
         this.verkoopprijs = verkoopprijs;
+        kortingen = new LinkedHashSet<>();
+    }
+    public Set<Korting> getKortingen(){
+        return Collections.unmodifiableSet(kortingen);
     }
 
     public long getId() {

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("artikels")
@@ -16,6 +17,12 @@ public class ArtikelController {
 
     public ArtikelController(ArtikelService artikelService) {
         this.artikelService = artikelService;
+    }
+
+    private record IdNaamVerkoopprijs(long id, String naam, BigDecimal verkoopprijs) {
+        IdNaamVerkoopprijs(Artikel artikel) {
+            this(artikel.getId(), artikel.getNaam(), artikel.getVerkoopprijs());
+        }
     }
 
     @GetMapping("{id}")
@@ -35,13 +42,17 @@ public class ArtikelController {
     }
 
     @GetMapping(value = "naamBevat", params = "woord")
-    List<Artikel> findByNaamBevatWoord(String woord) {
-        return artikelService.findByNaamBevatWoord(woord);
+    Stream<IdNaamVerkoopprijs> findByNaamBevatWoord(String woord) {
+        return artikelService.findByNaamBevatWoord(woord)
+                .stream()
+                .map(IdNaamVerkoopprijs::new);
     }
 
     @GetMapping(params = "minimumWinst")
-    List<Artikel> findByMinimumWinst(BigDecimal minimumWinst) {
-        return artikelService.findMinimumWinst(minimumWinst);
+    Stream<IdNaamVerkoopprijs> findByMinimumWinst(BigDecimal minimumWinst) {
+        return artikelService.findMinimumWinst(minimumWinst)
+                .stream()
+                .map(IdNaamVerkoopprijs::new);
     }
 
     @GetMapping("verkoopprijzen/goodkoopste")

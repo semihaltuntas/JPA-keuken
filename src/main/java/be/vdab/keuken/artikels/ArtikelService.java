@@ -21,22 +21,6 @@ public class ArtikelService {
         return artikelRepository.findById(id);
     }
 
-    @Transactional
-    long create(NieuwFoodArtikel nieuwFoodArtikel) {
-        var artikel = new FoodArtikel(nieuwFoodArtikel.naam(), nieuwFoodArtikel.aankoopprijs(),
-                nieuwFoodArtikel.verkoopprijs(), nieuwFoodArtikel.houdbaarheid());
-        artikelRepository.save(artikel);
-        return artikel.getId();
-    }
-
-    @Transactional
-    long create(NieuwNonFoodArtikel nieuwNonFoodArtikel) {
-        var artikel = new NonFoodArtikel(nieuwNonFoodArtikel.naam(), nieuwNonFoodArtikel.aankoopprijs(),
-                nieuwNonFoodArtikel.verkoopprijs(), nieuwNonFoodArtikel.garantie());
-        artikelRepository.save(artikel);
-        return artikel.getId();
-    }
-
     List<Artikel> findByNaamBevatWoord(String woord) {
         return artikelRepository.findByNaamContainingOrderByNaam(woord);
     }
@@ -58,6 +42,21 @@ public class ArtikelService {
         artikelRepository.findById(id)
                 .orElseThrow(ArtikelNietGevondenException::new)
                 .setVerkoopprijs(verkoopprijs);
+    }
+    @Transactional
+    long create(NieuwFoodArtikel nieuwFoodArtikel) {
+        var artikel = new FoodArtikel(nieuwFoodArtikel.naam(), nieuwFoodArtikel.aankoopprijs(),
+                nieuwFoodArtikel.verkoopprijs(), nieuwFoodArtikel.houdbaarheid());
+        artikelRepository.save(artikel);
+        return artikel.getId();
+    }
+
+    @Transactional
+    long create(NieuwNonFoodArtikel nieuwNonFoodArtikel) {
+        var artikel = new NonFoodArtikel(nieuwNonFoodArtikel.naam(), nieuwNonFoodArtikel.aankoopprijs(),
+                nieuwNonFoodArtikel.verkoopprijs(), nieuwNonFoodArtikel.garantie());
+        artikelRepository.save(artikel);
+        return artikel.getId();
     }
 
     List<Artikel> findAll() {
