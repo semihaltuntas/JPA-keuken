@@ -28,8 +28,6 @@ import java.util.Set;
     @JoinColumn(name = "artikelgroepId")
     private ArtikelGroep artikelGroep;
 
-
-
     protected Artikel() {
     }
 

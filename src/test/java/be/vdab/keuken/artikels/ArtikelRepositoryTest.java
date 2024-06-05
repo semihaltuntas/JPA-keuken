@@ -9,7 +9,7 @@ import org.springframework.test.jdbc.JdbcTestUtils;
 import static org.assertj.core.api.Assertions.*;
 
 @DataJpaTest
-@Sql("/artikels.sql")
+@Sql({"/artikels.sql", "/artikelgroepen.sql"})
 class ArtikelRepositoryTest {
     private static final String ARTIKELS_TABLE = "artikels";
     private final ArtikelRepository artikelRepository;
@@ -38,8 +38,9 @@ class ArtikelRepositoryTest {
                 .getNaam())
                 .isEqualTo("banana");
     }
+
     @Test
-    void findByIdMetOnbestaandeIdVindtArtikel(){
+    void findByIdMetOnbestaandeIdVindtArtikel() {
         assertThat(artikelRepository.findById(Long.MAX_VALUE)).isEmpty();
     }
 }

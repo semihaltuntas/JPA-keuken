@@ -16,7 +16,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @Transactional
 @AutoConfigureMockMvc
-@Sql("/artikels.sql")
+@Sql({"/artikels.sql","/artikelgroepen.sql"})
 class ArtikelControllerTest {
     private final MockMvc mockMvc;
     private final JdbcClient jdbcClient;
