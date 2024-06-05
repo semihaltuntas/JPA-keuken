@@ -25,9 +25,11 @@ public class ArtikelController {
         }
     }
 
+
     @GetMapping("{id}")
-    Artikel findById(@PathVariable long id) {
+    IdNaamVerkoopprijs findById(@PathVariable long id) {
         return artikelService.findById(id)
+                .map(IdNaamVerkoopprijs::new)
                 .orElseThrow(ArtikelNietGevondenException::new);
     }
 
@@ -73,5 +75,12 @@ public class ArtikelController {
     @GetMapping()
     List<Artikel> findAllArtikels() {
         return artikelService.findAll();
+    }
+
+    @GetMapping("{id}/artikelGroepNaam")
+    String findArtikelGroepNaamByArtikelId(@PathVariable long id) {
+        return artikelService.findById(id)
+                .map(artikel -> artikel.getArtikelGroep().getNaam())
+                .orElseThrow(ArtikelGroepIdInArtikelNietGevondenException::new);
     }
 }

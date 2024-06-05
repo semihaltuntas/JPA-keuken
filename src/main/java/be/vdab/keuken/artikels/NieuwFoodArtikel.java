@@ -11,7 +11,8 @@ record NieuwFoodArtikel (
         @NotBlank String naam,
         @NotNull @PositiveOrZero BigDecimal aankoopprijs,
         @NotNull @PositiveOrZero BigDecimal verkoopprijs,
-        @Positive int houdbaarheid
+        @Positive int houdbaarheid,
+        @Positive long artikelgroepId
 ){}
 
 

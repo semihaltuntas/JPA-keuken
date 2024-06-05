@@ -11,6 +11,7 @@ public record NieuwNonFoodArtikel(
         @NotBlank String naam,
         @NotNull @PositiveOrZero BigDecimal aankoopprijs,
         @NotNull @PositiveOrZero BigDecimal verkoopprijs,
-        @Positive int garantie
+        @Positive int garantie,
+        @Positive long artikelgroepId
 ) {
 }

@@ -24,18 +24,28 @@ import java.util.Set;
     @OrderBy("vanafAantal")
     private Set<Korting> kortingen;
 
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "artikelgroepId")
+    private ArtikelGroep artikelGroep;
+
+
 
     protected Artikel() {
     }
 
-    public Artikel(String naam, BigDecimal aankoopprijs, BigDecimal verkoopprijs) {
+    public Artikel(String naam, BigDecimal aankoopprijs, BigDecimal verkoopprijs,ArtikelGroep artikelGroep) {
         this.naam = naam;
         this.aankoopprijs = aankoopprijs;
         this.verkoopprijs = verkoopprijs;
         kortingen = new LinkedHashSet<>();
+        this.artikelGroep = artikelGroep;
     }
     public Set<Korting> getKortingen(){
         return Collections.unmodifiableSet(kortingen);
+    }
+
+    public ArtikelGroep getArtikelGroep() {
+        return artikelGroep;
     }
 
     public long getId() {

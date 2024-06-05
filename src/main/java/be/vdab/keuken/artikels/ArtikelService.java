@@ -12,10 +12,13 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public class ArtikelService {
     private final ArtikelRepository artikelRepository;
+    private final ArtikelGroepRepository artikelGroepRepository;
 
-    public ArtikelService(ArtikelRepository artikelRepository) {
+    public ArtikelService(ArtikelRepository artikelRepository, ArtikelGroepRepository artikelGroepRepository) {
         this.artikelRepository = artikelRepository;
+        this.artikelGroepRepository = artikelGroepRepository;
     }
+
 
     Optional<Artikel> findById(long id) {
         return artikelRepository.findById(id);
@@ -43,18 +46,23 @@ public class ArtikelService {
                 .orElseThrow(ArtikelNietGevondenException::new)
                 .setVerkoopprijs(verkoopprijs);
     }
+
     @Transactional
     long create(NieuwFoodArtikel nieuwFoodArtikel) {
+        ArtikelGroep artikelGroep = artikelGroepRepository.findById(nieuwFoodArtikel.artikelgroepId())
+                .orElseThrow(ArtikelGroepIdInArtikelNietGevondenException::new);
         var artikel = new FoodArtikel(nieuwFoodArtikel.naam(), nieuwFoodArtikel.aankoopprijs(),
-                nieuwFoodArtikel.verkoopprijs(), nieuwFoodArtikel.houdbaarheid());
+                nieuwFoodArtikel.verkoopprijs(), nieuwFoodArtikel.houdbaarheid(), artikelGroep);
         artikelRepository.save(artikel);
         return artikel.getId();
     }
 
     @Transactional
     long create(NieuwNonFoodArtikel nieuwNonFoodArtikel) {
+        ArtikelGroep artikelGroep = artikelGroepRepository.findById(nieuwNonFoodArtikel.artikelgroepId())
+                .orElseThrow(ArtikelGroepIdInArtikelNietGevondenException::new);
         var artikel = new NonFoodArtikel(nieuwNonFoodArtikel.naam(), nieuwNonFoodArtikel.aankoopprijs(),
-                nieuwNonFoodArtikel.verkoopprijs(), nieuwNonFoodArtikel.garantie());
+                nieuwNonFoodArtikel.verkoopprijs(), nieuwNonFoodArtikel.garantie(), artikelGroep);
         artikelRepository.save(artikel);
         return artikel.getId();
     }
