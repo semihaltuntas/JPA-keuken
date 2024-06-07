@@ -1,5 +1,6 @@
 package be.vdab.keuken.artikels;
 
+import be.vdab.keuken.artikelGroeps.ArtikelGroep;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -11,7 +12,7 @@ import java.util.Set;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "soort")
 @Table(name = "artikels")
- abstract class Artikel {
+public abstract class Artikel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -38,6 +39,18 @@ import java.util.Set;
         kortingen = new LinkedHashSet<>();
         this.artikelGroep = artikelGroep;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof Artikel artikel &&
+                naam.equalsIgnoreCase(artikel.getNaam());
+    }
+
+    @Override
+    public int hashCode() {
+        return naam.toLowerCase().hashCode();
+    }
+
     public Set<Korting> getKortingen(){
         return Collections.unmodifiableSet(kortingen);
     }

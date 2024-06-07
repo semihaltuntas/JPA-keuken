@@ -1,6 +1,7 @@
 package be.vdab.keuken.artikels;
 
-import org.springframework.dao.DataIntegrityViolationException;
+import be.vdab.keuken.artikelGroeps.ArtikelGroepIdInArtikelNietGevondenException;
+import be.vdab.keuken.artikelGroeps.ArtikelGroepRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -49,7 +50,7 @@ public class ArtikelService {
 
     @Transactional
     long create(NieuwFoodArtikel nieuwFoodArtikel) {
-        ArtikelGroep artikelGroep = artikelGroepRepository.findById(nieuwFoodArtikel.artikelgroepId())
+        var artikelGroep = artikelGroepRepository.findById(nieuwFoodArtikel.artikelgroepId())
                 .orElseThrow(ArtikelGroepIdInArtikelNietGevondenException::new);
         var artikel = new FoodArtikel(nieuwFoodArtikel.naam(), nieuwFoodArtikel.aankoopprijs(),
                 nieuwFoodArtikel.verkoopprijs(), nieuwFoodArtikel.houdbaarheid(), artikelGroep);
@@ -59,7 +60,7 @@ public class ArtikelService {
 
     @Transactional
     long create(NieuwNonFoodArtikel nieuwNonFoodArtikel) {
-        ArtikelGroep artikelGroep = artikelGroepRepository.findById(nieuwNonFoodArtikel.artikelgroepId())
+        var artikelGroep = artikelGroepRepository.findById(nieuwNonFoodArtikel.artikelgroepId())
                 .orElseThrow(ArtikelGroepIdInArtikelNietGevondenException::new);
         var artikel = new NonFoodArtikel(nieuwNonFoodArtikel.naam(), nieuwNonFoodArtikel.aankoopprijs(),
                 nieuwNonFoodArtikel.verkoopprijs(), nieuwNonFoodArtikel.garantie(), artikelGroep);

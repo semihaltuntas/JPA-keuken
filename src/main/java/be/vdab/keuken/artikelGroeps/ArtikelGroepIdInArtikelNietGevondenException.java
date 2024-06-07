@@ -1,4 +1,4 @@
-package be.vdab.keuken.artikels;
+package be.vdab.keuken.artikelGroeps;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

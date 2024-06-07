@@ -16,7 +16,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @Transactional
 @AutoConfigureMockMvc
-@Sql({"/artikels.sql","/artikelgroepen.sql"})
+@Sql({"/artikelgroepen.sql","/artikels.sql"})
 class ArtikelControllerTest {
     private final MockMvc mockMvc;
     private final JdbcClient jdbcClient;
@@ -36,6 +36,7 @@ class ArtikelControllerTest {
     @Test
     void findByIdMetBestaandeIdVindtArtikel() throws Exception {
         var id = idVanBanana();
+        System.out.println(id);
         mockMvc.perform(get("/artikels/{id}", id))
                 .andExpectAll(status().isOk(),
                         jsonPath("naam").value("banana"));

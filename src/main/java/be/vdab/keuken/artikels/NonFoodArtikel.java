@@ -1,5 +1,6 @@
 package be.vdab.keuken.artikels;
 
+import be.vdab.keuken.artikelGroeps.ArtikelGroep;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 
@@ -12,7 +13,7 @@ public class NonFoodArtikel extends Artikel {
     protected NonFoodArtikel() {
     }
 
-    public NonFoodArtikel(String naam, BigDecimal aankoopprijs, BigDecimal verkoopprijs, int garantie,ArtikelGroep artikelGroep) {
+    public NonFoodArtikel(String naam, BigDecimal aankoopprijs, BigDecimal verkoopprijs, int garantie, ArtikelGroep artikelGroep) {
         super(naam, aankoopprijs, verkoopprijs,artikelGroep);
         this.garantie = garantie;
     }

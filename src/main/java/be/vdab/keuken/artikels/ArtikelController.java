@@ -1,5 +1,6 @@
 package be.vdab.keuken.artikels;
 
+import be.vdab.keuken.artikelGroeps.ArtikelGroepIdInArtikelNietGevondenException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -7,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Stream;
 
 @RestController
@@ -83,4 +83,5 @@ public class ArtikelController {
                 .map(artikel -> artikel.getArtikelGroep().getNaam())
                 .orElseThrow(ArtikelGroepIdInArtikelNietGevondenException::new);
     }
+
 }
