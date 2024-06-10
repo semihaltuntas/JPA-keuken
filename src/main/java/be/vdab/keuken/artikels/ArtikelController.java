@@ -25,6 +25,14 @@ public class ArtikelController {
         }
     }
 
+    private record ArtikelBeknoptMetArtikelgrop(long id, String naam, BigDecimal verkoopprijs,
+                                                String artikelGroep) {
+        ArtikelBeknoptMetArtikelgrop(Artikel artikel) {
+            this(artikel.getId(), artikel.getNaam(), artikel.getVerkoopprijs(),
+                    artikel.getArtikelGroep().getNaam());
+        }
+    }
+
 
     @GetMapping("{id}")
     IdNaamVerkoopprijs findById(@PathVariable long id) {
@@ -44,10 +52,10 @@ public class ArtikelController {
     }
 
     @GetMapping(value = "naamBevat", params = "woord")
-    Stream<IdNaamVerkoopprijs> findByNaamBevatWoord(String woord) {
+    Stream<ArtikelBeknoptMetArtikelgrop> findByNaamBevatWoord(String woord) {
         return artikelService.findByNaamBevatWoord(woord)
                 .stream()
-                .map(IdNaamVerkoopprijs::new);
+                .map(ArtikelBeknoptMetArtikelgrop::new);
     }
 
     @GetMapping(params = "minimumWinst")
