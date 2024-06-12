@@ -25,7 +25,7 @@ public class ArtikelGroepController {
         return artikelGroepService.findById(id)
                 .map(artikelGroep -> artikelGroep.getArtikels()
                                 .stream()
-                        .map(artikel -> artikel.getNaam()))
+                        .map(Artikel::getNaam))
                 .orElseThrow(ArtikelGroepNietGevondenException::new);
     }
 }
